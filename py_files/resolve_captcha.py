@@ -11,8 +11,8 @@ from loguru import logger
 
 def get_client_key():
     with open('text_files\\my_info.yml', 'r', encoding='utf-8') as my_info:
-        client_key = yaml.load(my_info, Loader=yaml.FullLoader)
-        return client_key[0]
+        my_info = yaml.load(my_info, Loader=yaml.FullLoader)
+        return my_info['token']
 
 
 def parse_image(url):
