@@ -6,6 +6,8 @@ import random as r
 
 from loguru import logger
 from datetime import datetime
+
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -45,11 +47,14 @@ logger.add(sys.stderr, format=logger_format_critical, level='CRITICAL', filter=c
 # logger.add('file.txt')
 
 def ip_check():
-    driver.get('https://2ip.ru/')
-    ip = driver.find_element_by_xpath('//div[@class="ip"]/span').text
-    logger.debug(f'Ваш прокси: {ip}')
-    return ip
-
+    try:
+        driver.get('https://2ip.ru/')
+        ip = driver.find_element_by_xpath('//div[@class="ip"]/span').text
+        logger.debug(f'Ваш прокси: {ip}')
+        return ip
+    except NoSuchElementException:
+        logger.critical('2ip не прогрузился')
+        return '2ip не прогрузился'
 
 def request_appointment(request_list):
     request = request_list[0]
