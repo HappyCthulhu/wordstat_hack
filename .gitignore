@@ -5,6 +5,9 @@
 /.idea
 pyvenv.cfg
 chromedriver.exe
+*.log
+*.pyc
+debug.log
 /text_files/debug.log
 /for_Nik
 /text_files

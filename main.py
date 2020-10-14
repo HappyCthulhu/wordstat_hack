@@ -114,7 +114,7 @@ def search(stop_count, search_key):
         time.sleep(pause)
     report_file.close()
     end_time = datetime.now()
-    logger.debug(
+    logger.info(
         f'Работа успешно завершена. Осталось {len(request_list)} ключей поиска. '
         f'Результаты можете посмотреть в report.txt и final_report.txt')
     return count_now, start_time, end_time
@@ -151,7 +151,7 @@ for i in range(len(request_list)):
     search_key, request_list = request_appointment(request_list)
     email_login, email_pass, emails_list = email_appointment(emails_list)
     count = r.randint(89, 150)
-    logger.debug(f'Будет сделано запросов: {count}')
+    logger.info(f'Будет сделано запросов: {count}')
     driver.delete_all_cookies()
     authorization_in_yandex(email_login, email_pass)
     request_count, start_time, end_time = search(count, search_key)
