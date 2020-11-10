@@ -1,4 +1,6 @@
 import sys
+from pathlib import Path
+import random as r
 
 import yaml
 from loguru import logger
@@ -33,6 +35,11 @@ logger.add(sys.stderr, format=logger_format_debug, level='DEBUG', filter=debug_o
 logger.add(sys.stderr, format=logger_format_info, level='INFO', filter=info_only)
 logger.add(sys.stderr, format=logger_format_critical, level='CRITICAL', filter=critical_only)
 
+def user_agents_unpack():
+    with open(Path('text_files', 'user-agents.yml'), encoding='utf-8') as user_agents_file:
+        user_agents_list = yaml.load(user_agents_file, Loader=yaml.FullLoader)
+        user_agent = user_agents_list[r.randint(0, len(user_agents_list))]
+        return user_agent
 
 def get_proxies_from_file():
     with open('text_files\\proxies.yml', 'r', encoding='utf-8') as proxy_file:
@@ -54,6 +61,9 @@ def driver_settings(proxy_list):
     proxy_set = ip_proxy + ':' + port_proxy
     options.add_extension("Proxy_Auto_Auth.crx")
     options.add_argument("--proxy-server=http://{}".format(proxy_set))
+
+    user_agent = user_agents_unpack()
+    options.add_argument(f"user-agent={user_agent}")
 
     driver = webdriver.Chrome('chromedriver', options=options)
     driver.get("chrome-extension://ggmdpepbjljkkkdaklfihhngmmgmpggp/options.html")

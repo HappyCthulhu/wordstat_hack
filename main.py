@@ -151,6 +151,8 @@ for i in range(len(request_list)):
       """
     })
 
+    print(driver.execute_script("return navigator.userAgent"))
+
     ip = ip_check()
     # count, search_key, comment = input_func()
     search_key, request_list = request_appointment(request_list)
@@ -161,7 +163,7 @@ for i in range(len(request_list)):
     authorization_in_yandex(email_login, email_pass)
     request_count, start_time, end_time = search(count, search_key)
     wasted_time = end_time - start_time
-    with open('.' + os.path.join(os.sep, 'text_files', 'report.txt'), 'a', encoding='utf-8-sig') as final_report:
+    with open('.' + os.path.join(os.sep, 'text_files', 'final_report.txt'), 'a', encoding='utf-8-sig') as final_report:
         final_report.write(
             f'\ndate,time:{datetime.now()}| wasted time:{wasted_time}| IP:{ip}| search key:{search_key}| '
             f'number of requests:{request_count}| email:{email_login}')
