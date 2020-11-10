@@ -48,7 +48,11 @@ def get_proxies_from_file():
 
 
 def driver_settings(proxy_list):
-    proxy = proxy_list[0]
+    try:
+        proxy = proxy_list[0]
+    except IndexError:
+        logger.critical('Кончились прокси!')
+        sys.exit()
     del proxy_list[0]
     if proxy == '':
         return webdriver.Chrome()

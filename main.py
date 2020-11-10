@@ -111,10 +111,10 @@ def search(stop_count, search_key):
                 continue
         count_now += 1
         with open('.' + os.path.join(os.sep, 'text_files', 'report.txt'), 'a', encoding='utf-8-sig') as report_file:
-            report_file.write(f'\ndate,time: {datetime.now()}, IP: {ip}, search key: {search_key}, '
+            report_file.write(f'\ndate,time: {datetime.now()}, IP: {ip}, search key: {search_key}, user-agent: {user_agent}, '
                               f'count: {count_now}/{stop_count}')
         logger.debug(f'Разослано запросов по ключу "{search_key}": {count_now}/{stop_count}')
-        pause = r.randint(4, 10)
+        pause = r.randint(1, 5)
         logger.debug(f'Длительность паузы в секундах: {pause}')
         time.sleep(pause)
     report_file.close()
@@ -151,7 +151,9 @@ for i in range(len(request_list)):
       """
     })
 
-    print(driver.execute_script("return navigator.userAgent"))
+    user_agent = driver.execute_script("return navigator.userAgent")
+
+    logger.debug(f'User-agent: {user_agent}')
 
     ip = ip_check()
     # count, search_key, comment = input_func()
@@ -166,5 +168,5 @@ for i in range(len(request_list)):
     with open('.' + os.path.join(os.sep, 'text_files', 'final_report.txt'), 'a', encoding='utf-8-sig') as final_report:
         final_report.write(
             f'\ndate,time:{datetime.now()}| wasted time:{wasted_time}| IP:{ip}| search key:{search_key}| '
-            f'number of requests:{request_count}| email:{email_login}')
+            f'number of requests:{request_count}| email:{email_login}| user-agent: {user_agent}')
     driver.quit()
