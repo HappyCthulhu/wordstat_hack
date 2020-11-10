@@ -120,7 +120,7 @@ def search(stop_count, search_key):
     report_file.close()
     end_time = datetime.now()
     logger.info(
-        f'Работа успешно завершена. Осталось {len(request_list)} ключей поиска. '
+        f'Работа успешно завершена. Осталось ключей поиска: {len(request_list)}'
         f'Результаты можете посмотреть в report.txt и final_report.txt')
     return count_now, start_time, end_time
 
